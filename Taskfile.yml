@@ -1,0 +1,15 @@
+version: 3
+
+silent: true
+
+tasks:
+  default: task -l
+  push:
+    desc: Build and push image to docker registry
+    vars:
+      PLATFORM: linux/amd64,linux/arm64
+      TAG: codebarista/octane:latest
+    cmds:
+      - docker buildx create --name=container --driver=docker-container --use
+      - docker buildx build --platform={{.PLATFORM}} -t {{.TAG}} --push src
+      - docker buildx rm container
