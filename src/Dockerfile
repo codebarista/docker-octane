@@ -40,7 +40,7 @@ COPY octane.ini /usr/local/etc/php/conf.d/octane.ini
 
 WORKDIR /var/www
 
-EXPOSE 9000
+EXPOSE 9000 5173
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
