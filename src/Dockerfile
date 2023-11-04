@@ -12,6 +12,7 @@ RUN crontab -l | { cat; echo "$SCHEDULE_CRONTAB"; } | crontab - \
     && apk update && apk upgrade && apk add --update \
     mariadb-client \
     supervisor \
+    xdg-utils \
     tzdata \
     npm \
     && install-php-extensions \
