@@ -1,15 +1,28 @@
-version: 3
-
 silent: true
-
+version: 3
 tasks:
   default: task -l
-  push:
-    desc: Build and push image to docker registry
+  build:
+    desc: Build octane image and put out
+    internal: true
     vars:
-      PLATFORM: linux/amd64,linux/arm64
       TAG: codebarista/octane:latest
     cmds:
       - docker buildx create --name=container --driver=docker-container --use
-      - docker buildx build --platform={{.PLATFORM}} -t {{.TAG}} --push src
+      - docker buildx build --platform={{.PLATFORM}} -t {{.TAG}} --output={{.OUTPUT}} src
       - docker buildx rm container
+      - docker image prune --force --filter=dangling=true
+  push:
+    desc: Build and push image to registry
+    cmds:
+      - task: build
+        vars:
+          PLATFORM: linux/amd64,linux/arm64
+          OUTPUT: type=registry
+  load:
+    desc: Build and load image to docker
+    cmds:
+      - task: build
+        vars:
+          PLATFORM: linux/arm64
+          OUTPUT: type=docker
