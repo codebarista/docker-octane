@@ -26,3 +26,6 @@ tasks:
         vars:
           PLATFORM: linux/arm64
           OUTPUT: type=docker
+  clear:
+    desc: Remove buildx container after failed build
+    cmd: docker buildx rm container
