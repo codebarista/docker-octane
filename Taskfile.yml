@@ -29,3 +29,6 @@ tasks:
   clear:
     desc: Remove buildx container after failed build
     cmd: docker buildx rm container
+  run:
+    desc: Run octane docker image
+    cmd: docker run -it --rm codebarista/octane:latest sh

@@ -1,4 +1,4 @@
-FROM php:alpine
+FROM php:8.2-alpine
 
 ARG INSTALLER_BASE_URL="https://github.com/mlocati/docker-php-extension-installer/releases"
 ARG SCHEDULE_CRONTAB="* * * * * /usr/local/bin/php /var/www/artisan schedule:run"
