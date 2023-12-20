@@ -1,4 +1,4 @@
-FROM php:8.2-alpine
+FROM php:alpine
 
 ARG INSTALLER_BASE_URL="https://github.com/mlocati/docker-php-extension-installer/releases"
 ARG SCHEDULE_CRONTAB="* * * * * /usr/local/bin/php /var/www/artisan schedule:run"
@@ -20,7 +20,6 @@ RUN crontab -l | { cat; echo "$SCHEDULE_CRONTAB"; } | crontab - \
     apcu \
     bcmath \
     gd \
-    imagick \
     memcached \
     opcache \
     pcntl \
@@ -34,6 +33,20 @@ RUN crontab -l | { cat; echo "$SCHEDULE_CRONTAB"; } | crontab - \
     && rm -rf /usr/local/bin/install-php-extensions \
     && rm -rf /tmp/* /var/tmp/* \
     && rm -rf /var/cache/apk/*
+
+##### Temp build imagick from source #####
+ARG IMAGICK_SOURCE_URL="https://github.com/Imagick/imagick.git"
+RUN apk add --no-cache git make imagemagick-dev $PHPIZE_DEPS \
+    && git clone $IMAGICK_SOURCE_URL --depth 1 /tmp/imagick \
+    && cd /tmp/imagick \
+    && git checkout master \
+    && phpize && ./configure \
+    && make && make install \
+    && docker-php-ext-enable imagick \
+    && apk del git make $PHPIZE_DEPS \
+    && rm -rf /tmp/* /var/tmp/* \
+    && rm -rf /var/cache/apk/*
+##### Temp build imagick from source #####
 
 COPY super.conf /etc/supervisor/conf.d/supervisord.conf
 COPY octane.ini /usr/local/etc/php/conf.d/octane.ini
