@@ -13,6 +13,7 @@ RUN crontab -l | { cat; echo "$SCHEDULE_CRONTAB"; } | crontab - \
     mariadb-client \
     supervisor \
     xdg-utils \
+    pngcrush \
     tzdata \
     npm \
     && install-php-extensions \
