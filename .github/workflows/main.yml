@@ -1,7 +1,10 @@
 name: Deploy Octane Image
+env:
+  BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
+  TAG_NAME: ${{ github.repository_owner }}
 on:
   push:
-    branches: main
+    branches: [swoole, franken]
 jobs:
   deploy_prod:
     environment: production
@@ -22,6 +25,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           platforms: linux/amd64,linux/arm64
-          tags: codebarista/octane:latest
+          tags: $TAG_NAME/octane:$BRANCH_NAME
           context: src
           push: true
