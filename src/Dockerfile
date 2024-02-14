@@ -7,6 +7,7 @@ ADD $INSTALLER_BASE_URL/latest/download/install-php-extensions /usr/local/bin/
 
 ENV TZ=Europe/Berlin
 
+### default laravel octane dependencies
 RUN crontab -l | { cat; echo "$SCHEDULE_CRONTAB"; } | crontab - \
     && chmod +x /usr/local/bin/install-php-extensions \
     && apk update && apk upgrade && apk add --update \
@@ -15,8 +16,22 @@ RUN crontab -l | { cat; echo "$SCHEDULE_CRONTAB"; } | crontab - \
     xdg-utils \
     pngcrush \
     tzdata \
-    npm \
-    && install-php-extensions \
+    npm
+
+### build essentials for node canvas
+RUN apk add --update --no-cache \
+    make \
+    g++ \
+    jpeg-dev \
+    cairo-dev \
+    giflib-dev \
+    pango-dev \
+    libtool \
+    autoconf \
+    automake
+
+### required php dependencies
+RUN install-php-extensions \
     @composer \
     apcu \
     bcmath \
@@ -28,28 +43,17 @@ RUN crontab -l | { cat; echo "$SCHEDULE_CRONTAB"; } | crontab - \
     pdo_mysql \
     redis \
     swoole \
-    zip \
-    && cp /usr/share/zoneinfo/$TZ /etc/localtime \
+    zip
+
+### set timezone and clean-up
+RUN cp /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone \
     && apk del tzdata \
     && rm -rf /usr/local/bin/install-php-extensions \
     && rm -rf /tmp/* /var/tmp/* \
     && rm -rf /var/cache/apk/*
 
-##### Temp build imagick from source #####
-#ARG IMAGICK_SOURCE_URL="https://github.com/Imagick/imagick.git"
-#RUN apk add --no-cache git make imagemagick-dev $PHPIZE_DEPS \
-#    && git clone $IMAGICK_SOURCE_URL --depth 1 /tmp/imagick \
-#    && cd /tmp/imagick \
-#    && git checkout master \
-#    && phpize && ./configure \
-#    && make && make install \
-#    && docker-php-ext-enable imagick \
-#    && apk del git make $PHPIZE_DEPS \
-#    && rm -rf /tmp/* /var/tmp/* \
-#    && rm -rf /var/cache/apk/*
-##### Temp build imagick from source #####
-
+### default supervisor and php ini files
 COPY super.conf /etc/supervisor/conf.d/supervisord.conf
 COPY octane.ini /usr/local/etc/php/conf.d/octane.ini
 
@@ -59,5 +63,6 @@ EXPOSE 9000 5173
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
+### a Laravel installation with Octane is mandatory
 HEALTHCHECK --start-period=5s --interval=2s --timeout=5s --retries=8 \
     CMD php artisan octane:status || exit 1
