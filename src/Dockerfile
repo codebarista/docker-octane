@@ -16,6 +16,7 @@ RUN crontab -l | { cat; echo "$SCHEDULE_CRONTAB"; } | crontab - \
     xdg-utils \
     pngcrush \
     tzdata \
+    nodejs \
     npm
 
 ### build essentials for node canvas
@@ -37,6 +38,7 @@ RUN install-php-extensions \
     bcmath \
     gd \
     imagick/imagick@master \
+    intl \
     memcached \
     opcache \
     pcntl \
