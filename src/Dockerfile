@@ -47,6 +47,9 @@ RUN install-php-extensions \
     swoole \
     zip
 
+### Install node-canvas globally
+RUN npm install -g canvas
+
 ### set timezone and clean-up
 RUN cp /usr/share/zoneinfo/$TZ /etc/localtime \
     && echo $TZ > /etc/timezone \

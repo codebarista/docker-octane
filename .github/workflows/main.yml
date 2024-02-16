@@ -4,7 +4,7 @@ env:
   TAG_NAME: ${{ github.repository_owner }}
 on:
   push:
-    branches: [swoole, franken]
+    branches: [main, swoole, franken]
 jobs:
   deploy_prod:
     environment: production
