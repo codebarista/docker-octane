@@ -19,6 +19,16 @@ RUN crontab -l | { cat; echo "$SCHEDULE_CRONTAB"; } | crontab - \
     nodejs \
     npm
 
+### install default fonts
+RUN apk add --update \
+    font-terminus \
+    font-inconsolata \
+    font-dejavu \
+    font-noto \
+    font-noto-cjk \
+    font-awesome \
+    font-noto-extra
+
 ### build essentials for node canvas
 RUN apk add --update --no-cache \
     make \
@@ -46,9 +56,6 @@ RUN install-php-extensions \
     redis \
     swoole \
     zip
-
-### Install node-canvas globally
-RUN npm install -g canvas
 
 ### set timezone and clean-up
 RUN cp /usr/share/zoneinfo/$TZ /etc/localtime \
