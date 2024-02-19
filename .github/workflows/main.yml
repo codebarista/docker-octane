@@ -3,7 +3,6 @@ env:
   BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
   DOCKER_USERNAME: ${{ github.repository_owner }}
   IMAGE_NAME: octane
-  TAG: ${{ env.BRANCH_NAME == 'main' && 'latest' || env.BRANCH_NAME }}
 on:
   push:
     branches: [ main, swoole, franken ]
@@ -27,6 +26,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           platforms: linux/amd64,linux/arm64
-          tags: ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
+          tags: ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.BRANCH_NAME == 'main' && 'latest' || env.BRANCH_NAME }}
           context: src
           push: true
