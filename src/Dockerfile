@@ -19,7 +19,7 @@ RUN crontab -l | { cat; echo "$SCHEDULE_CRONTAB"; } | crontab - \
     nodejs \
     npm
 
-### install default fonts
+### install some default fonts
 RUN apk add --update \
     font-terminus \
     font-inconsolata \

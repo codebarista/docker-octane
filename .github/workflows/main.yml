@@ -1,10 +1,12 @@
 name: Deploy Octane Image
 env:
   BRANCH_NAME: ${{ github.base_ref || github.ref_name }}
-  TAG_NAME: ${{ github.repository_owner }}
+  DOCKER_USERNAME: ${{ github.repository_owner }}
+  IMAGE_NAME: octane
+  TAG: ${{ env.BRANCH_NAME == 'main' && 'latest' || env.BRANCH_NAME }}
 on:
   push:
-    branches: [main, swoole, franken]
+    branches: [ main, swoole, franken ]
 jobs:
   deploy_prod:
     environment: production
@@ -25,6 +27,6 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           platforms: linux/amd64,linux/arm64
-          tags: ${{ env.TAG_NAME }}/octane:${{ env.BRANCH_NAME }}
+          tags: ${{ env.DOCKER_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.TAG }}
           context: src
           push: true
