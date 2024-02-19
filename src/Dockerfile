@@ -1,4 +1,4 @@
-FROM php:alpine
+FROM dunglas/frankenphp:alpine
 
 ARG INSTALLER_BASE_URL="https://github.com/mlocati/docker-php-extension-installer/releases"
 ARG SCHEDULE_CRONTAB="* * * * * /usr/local/bin/php /var/www/artisan schedule:run"
@@ -54,7 +54,6 @@ RUN install-php-extensions \
     pcntl \
     pdo_mysql \
     redis \
-    swoole \
     zip
 
 ### set timezone and clean-up

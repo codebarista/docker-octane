@@ -3,7 +3,7 @@ version: 3
 silent: true
 
 env:
-  TAG: '{{.DOCKER_IMAGE_TAG | default "codebarista/octane:latest"}}'
+  TAG: '{{.DOCKER_IMAGE_TAG | default "codebarista/octane:franken"}}'
   PLATFORM: '{{.DOCKER_PLATFORM | default "linux/amd64,linux/arm64"}}'
   REGISTRY: '{{.DOCKER_REGISTRY | default "docker.io"}}'
 
