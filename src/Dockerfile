@@ -11,6 +11,7 @@ ENV TZ=Europe/Berlin
 RUN crontab -l | { cat; echo "$SCHEDULE_CRONTAB"; } | crontab - \
     && chmod +x /usr/local/bin/install-php-extensions \
     && apk update && apk upgrade && apk add --update \
+    postgresql-client \
     mariadb-client \
     supervisor \
     xdg-utils \
@@ -53,6 +54,8 @@ RUN install-php-extensions \
     opcache \
     pcntl \
     pdo_mysql \
+    pdo_pgsql \
+    pgsql \
     redis \
     swoole \
     zip

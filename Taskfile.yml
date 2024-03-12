@@ -3,8 +3,9 @@ version: 3
 silent: true
 
 env:
-  TAG: '{{.DOCKER_IMAGE_TAG | default "codebarista/octane:latest"}}'
+  LOCAL_PLATFORM: '{{.DOCKER_LOCAL_PLATFORM | default "linux/arm64"}}'
   PLATFORM: '{{.DOCKER_PLATFORM | default "linux/amd64,linux/arm64"}}'
+  TAG: '{{.DOCKER_IMAGE_TAG | default "codebarista/octane:latest"}}'
   REGISTRY: '{{.DOCKER_REGISTRY | default "docker.io"}}'
 
 tasks:
@@ -30,7 +31,7 @@ tasks:
       - task: login
       - task: build
         vars:
-          OUTPUT: type=registry
+          OUTPUT: type=registry --push
 
   load:
     desc: Build and load image to local docker
@@ -38,7 +39,7 @@ tasks:
       - task: build
         vars:
           PLATFORM: linux/arm64
-          OUTPUT: type=docker
+          OUTPUT: type=docker --load
 
   prune:
     desc: Prune dangling images
