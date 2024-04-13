@@ -1,6 +1,8 @@
 # Docker Octane
+[![Deploy Octane Image](https://github.com/codebarista/docker-octane/actions/workflows/main.yml/badge.svg)](https://github.com/codebarista/docker-octane/actions/workflows/main.yml)
 
 Latest PHP Alpine Docker image to run Laravel Octane with Swoole or FrankenPHP
+
 
 ## Setup
 
