@@ -1,7 +1,7 @@
 # Docker Octane
 [![Deploy Octane Image](https://github.com/codebarista/docker-octane/actions/workflows/main.yml/badge.svg)](https://github.com/codebarista/docker-octane/actions/workflows/main.yml)
 
-Latest PHP Alpine Docker image to run Laravel Octane with Swoole or FrankenPHP
+Latest PHP Alpine Docker image to run Laravel Octane with Swoole or FrankenPHP.
 
 
 ## Setup
@@ -14,17 +14,18 @@ brew install go-task
 
 ## Config
 
-Rename `.env.example` and set env vars
+Copy `.env.example` to `.env` and set your env vars:
 
 ```dotenv
 DOCKER_IMAGE_TAG=codebarista/octane:latest
 DOCKER_PLATFORM=linux/amd64,linux/arm64
+DOCKER_LOCAL_PLATFORM=linux/arm64
 DOCKER_REGISTRY=docker.io
 ```
 
 ## Load
 
-Build and load image to local registry
+Build and load image to local registry.
 
 ```shell
 task load
@@ -32,7 +33,7 @@ task load
 
 ## Push
 
-Build and push image to docker registry
+Build and push image to remote registry.
 
 ```shell
 task push
@@ -40,7 +41,7 @@ task push
 
 ## Fork
 
-Fork and set GitHub secrets for custom push on push.
+Fork and set GitHub secrets for custom push.
 
 ```dotenv
 DOCKERHUB_USERNAME

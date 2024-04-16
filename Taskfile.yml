@@ -2,6 +2,8 @@ version: 3
 
 silent: true
 
+dotenv: ['.env']
+
 env:
   LOCAL_PLATFORM: '{{.DOCKER_LOCAL_PLATFORM | default "linux/arm64"}}'
   PLATFORM: '{{.DOCKER_PLATFORM | default "linux/amd64,linux/arm64"}}'
@@ -31,6 +33,7 @@ tasks:
       - task: login
       - task: build
         vars:
+          PLATFORM: '{{.PLATFORM}}'
           OUTPUT: type=registry --push
 
   load:
@@ -38,7 +41,7 @@ tasks:
     cmds:
       - task: build
         vars:
-          PLATFORM: linux/arm64
+          PLATFORM: '{{.LOCAL_PLATFORM}}'
           OUTPUT: type=docker --load
 
   prune:
@@ -46,7 +49,7 @@ tasks:
     cmd: docker image prune --force --filter=dangling=true
 
   clear:
-    desc: Remove buildx container after failed build
+    desc: Remove buildx container
     cmd: docker buildx rm container
 
   run:

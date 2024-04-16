@@ -1,7 +1,7 @@
 FROM php:alpine
 
 ARG INSTALLER_BASE_URL="https://github.com/mlocati/docker-php-extension-installer/releases"
-ARG SCHEDULE_CRONTAB="* * * * * /usr/local/bin/php /var/www/artisan schedule:run"
+ARG SCHEDULE_CRONTAB="* * * * * cd /var/www && php artisan schedule:run >> /dev/null 2>&1"
 
 ADD $INSTALLER_BASE_URL/latest/download/install-php-extensions /usr/local/bin/
 
