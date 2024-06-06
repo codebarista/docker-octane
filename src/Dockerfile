@@ -77,7 +77,3 @@ WORKDIR /var/www
 EXPOSE 9000 5173
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
-
-### a Laravel installation with Octane is mandatory
-HEALTHCHECK --start-period=5s --interval=2s --timeout=5s --retries=8 \
-    CMD php artisan octane:status || exit 1
