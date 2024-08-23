@@ -18,7 +18,8 @@ RUN crontab -l | { cat; echo "$SCHEDULE_CRONTAB"; } | crontab - \
     pngcrush \
     tzdata \
     nodejs \
-    npm
+    npm \
+    zip
 
 ### install some default fonts
 RUN apk add --update \
