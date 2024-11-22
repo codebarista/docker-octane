@@ -1,9 +1,10 @@
-FROM php:alpine
+FROM php:8.3-alpine
 
 ARG INSTALLER_BASE_URL="https://github.com/mlocati/docker-php-extension-installer/releases"
 ARG SCHEDULE_CRONTAB="* * * * * cd /var/www && php artisan schedule:run >> /dev/null 2>&1"
 
-ADD $INSTALLER_BASE_URL/latest/download/install-php-extensions /usr/local/bin/
+# ADD $INSTALLER_BASE_URL/latest/download/install-php-extensions /usr/local/bin/
+ADD $INSTALLER_BASE_URL/download/2.6.4/install-php-extensions /usr/local/bin/
 
 ENV TZ=Europe/Berlin
 
@@ -49,7 +50,7 @@ RUN install-php-extensions \
     apcu \
     bcmath \
     gd \
-    imagick/imagick@master \
+    imagick \
     intl \
     memcached \
     opcache \
