@@ -22,6 +22,8 @@ tasks:
     desc: Build multi-arch octane image and put out
     internal: true
     cmds:
+      - echo "Platform $PLATFORM"
+      - echo "Tag $TAG"
       - docker buildx create --name=container --driver=docker-container --use
       - docker buildx build --platform={{.PLATFORM}} -t {{.TAG}} --output={{.OUTPUT}} src
       - task: clear
