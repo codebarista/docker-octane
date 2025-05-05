@@ -29,7 +29,8 @@ RUN apk add --update \
     font-noto \
     font-noto-cjk \
     font-awesome \
-    font-noto-extra
+    font-noto-extra \
+    font-roboto
 
 ### build essentials for node canvas
 RUN apk add --update --no-cache \
