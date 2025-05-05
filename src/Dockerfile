@@ -60,6 +60,7 @@ RUN install-php-extensions \
     pdo_pgsql \
     pgsql \
     redis \
+    sockets \
     zip
 
 ### set timezone and clean-up
