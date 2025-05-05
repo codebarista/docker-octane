@@ -1,4 +1,4 @@
-FROM phpswoole/swoole:php8.4-alpine
+FROM dunglas/frankenphp:php8.4-alpine
 
 ARG INSTALLER_BASE_URL="https://github.com/mlocati/docker-php-extension-installer/releases"
 ARG SCHEDULE_CRONTAB="* * * * * cd /var/www && php artisan schedule:run >> /dev/null 2>&1"
