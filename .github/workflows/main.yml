@@ -5,7 +5,7 @@ env:
   IMAGE_NAME: octane
 on:
   push:
-    branches: [ main, swoole, franken ]
+    branches: [ main, swoole, franken, roadrunner ]
 jobs:
   deploy_prod:
     environment: production

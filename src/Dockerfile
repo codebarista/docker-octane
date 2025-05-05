@@ -1,4 +1,5 @@
-FROM phpswoole/swoole:php8.4-alpine
+FROM spiralscout/roadrunner:latest AS roadrunner
+FROM php:alpine
 
 ARG INSTALLER_BASE_URL="https://github.com/mlocati/docker-php-extension-installer/releases"
 ARG SCHEDULE_CRONTAB="* * * * * cd /var/www && php artisan schedule:run >> /dev/null 2>&1"
@@ -68,6 +69,9 @@ RUN cp /usr/share/zoneinfo/$TZ /etc/localtime \
     && rm -rf /usr/local/bin/install-php-extensions \
     && rm -rf /tmp/* /var/tmp/* \
     && rm -rf /var/cache/apk/*
+
+### copy the roadrunner binary file
+COPY --from=roadrunner /usr/bin/rr /usr/local/bin/rr
 
 ### default supervisor and php ini files
 COPY super.conf /etc/supervisor/conf.d/supervisord.conf
